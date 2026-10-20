@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="TechNova.RMS.Console/TechNova.RMS.Console.csproj" />
+  <Project Path="TechNova.RMS.Tests/TechNova.RMS.Tests.csproj" />
 </Solution>

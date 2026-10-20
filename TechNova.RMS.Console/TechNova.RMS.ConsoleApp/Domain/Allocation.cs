@@ -16,7 +16,7 @@ public sealed class Allocation
     public DateTime CreatedAt { get; }
     public DateTime? ReleasedAt { get; private set; }
 
-    public Allocation(int id, int employeeId, int projectId, DateOnly start, DateOnly end, int percentage)
+    public Allocation(int id, int employeeId, int projectId, DateOnly start, DateOnly end, int percentage, DateTime? createdAt = null)
     {
         Id = id > 0 ? id : throw new ArgumentException("Id required", nameof(id));
         EmployeeId = employeeId > 0 ? employeeId : throw new ArgumentException("EmployeeId required", nameof(employeeId));
@@ -27,7 +27,7 @@ public sealed class Allocation
         EndDate = end;
         Percentage = percentage;
         Status = AllocationStatus.Active;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = createdAt ?? DateTime.UtcNow;
     }
 
     public void UpdateDates(DateOnly start, DateOnly end)
@@ -48,5 +48,11 @@ public sealed class Allocation
         if (Status == AllocationStatus.Released) return;
         Status = AllocationStatus.Released;
         ReleasedAt = DateTime.UtcNow;
+    }
+
+    public void RestoreStatus(AllocationStatus status, DateTime? releasedAt)
+    {
+        Status = status;
+        ReleasedAt = status == AllocationStatus.Released ? releasedAt ?? DateTime.UtcNow : null;
     }
 }

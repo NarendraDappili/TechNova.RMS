@@ -45,8 +45,8 @@ public sealed class AllocationRepository : IAllocationRepository
         public static AllocationDto From(Allocation a) => new(a.Id, a.EmployeeId, a.ProjectId, a.StartDate, a.EndDate, a.Percentage, a.Status, a.CreatedAt, a.ReleasedAt);
         public static Allocation ToDomain(AllocationDto d)
         {
-            var a = new Allocation(d.Id, d.EmployeeId, d.ProjectId, d.StartDate, d.EndDate, d.Percentage);
-            if (d.Status == AllocationStatus.Released) a.Release();
+            var a = new Allocation(d.Id, d.EmployeeId, d.ProjectId, d.StartDate, d.EndDate, d.Percentage, d.CreatedAt);
+            a.RestoreStatus(d.Status, d.ReleasedAt);
             return a;
         }
     }

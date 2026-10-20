@@ -19,6 +19,9 @@ internal static class CompositionRoot
         // Application services
         services.AddSingleton<INotificationService, ConsoleNotificationService>();
         services.AddSingleton<IAllocationService, AllocationService>();
+        services.AddSingleton<IEmployeeService, EmployeeService>();
+        services.AddSingleton<IProjectService, ProjectService>();
+        services.AddSingleton<IReportService, ReportService>();
         services.AddSingleton<IMatcher, SimpleMatcher>();
 
         // Console app

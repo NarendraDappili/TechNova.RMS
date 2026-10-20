@@ -24,6 +24,8 @@ public sealed class AllocationService : IAllocationService
 
     public async Task<Allocation> CreateAsync(int employeeId, int projectId, DateOnly start, DateOnly end, int percentage)
     {
+        if (end < start) throw new InvalidOperationException("Allocation end date must be on or after the start date");
+
         var emp = await _empRepo.GetByIdAsync(employeeId) ?? throw new InvalidOperationException("Employee not found");
         if (!emp.IsActive) throw new InvalidOperationException("Employee is not active");
 

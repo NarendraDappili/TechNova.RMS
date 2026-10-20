@@ -80,7 +80,7 @@ internal static class SeedData
     private static List<Project> CreateProjects()
     {
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        return new List<Project>
+        var projects = new List<Project>
         {
             new Project(1, "Project Apollo", "Acme Corp", today.AddDays(-30), today.AddDays(120), ProjectStatus.Active),
             new Project(2, "Project Beacon", "Beta LLC", today.AddDays(-10), today.AddDays(60), ProjectStatus.Active),
@@ -88,6 +88,14 @@ internal static class SeedData
             new Project(4, "Project Delta", "Delta Co", today.AddDays(-60), today.AddDays(30), ProjectStatus.Active),
             new Project(5, "Project Echo", "Echo Ltd", today.AddDays(0), today.AddDays(90), ProjectStatus.Active),
         };
+
+        projects[0].AddOrUpdateRequirement("C#", new Proficiency(4));
+        projects[0].AddOrUpdateRequirement("SQL", new Proficiency(3));
+        projects[1].AddOrUpdateRequirement("Testing", new Proficiency(4));
+        projects[2].AddOrUpdateRequirement("Consulting", new Proficiency(4));
+        projects[3].AddOrUpdateRequirement("C#", new Proficiency(3));
+        projects[4].AddOrUpdateRequirement("Azure", new Proficiency(3));
+        return projects;
     }
 
     private static List<Allocation> CreateAllocations(List<Employee> emps, List<Project> projs)

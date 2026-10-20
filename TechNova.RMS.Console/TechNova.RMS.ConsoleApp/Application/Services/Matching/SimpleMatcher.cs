@@ -23,7 +23,10 @@ public sealed class SimpleMatcher : IMatcher
 
     public async Task<IEnumerable<MatchResult>> FindMatchesAsync(int projectId, DateOnly start, DateOnly end)
     {
+        if (end < start) throw new ArgumentException("End date must be on or after start date");
+
         var proj = await _projRepo.GetByIdAsync(projectId) ?? throw new InvalidOperationException("Project not found");
+        if (start < proj.StartDate || end > proj.EndDate) throw new InvalidOperationException("Matching dates must be within project dates");
         var emps = (await _empRepo.GetAllAsync()).Where(e => e.IsActive).ToList();
         var activeAllocs = (await _allocRepo.GetAllAsync()).Where(a => a.Status == AllocationStatus.Active).ToList();
 
